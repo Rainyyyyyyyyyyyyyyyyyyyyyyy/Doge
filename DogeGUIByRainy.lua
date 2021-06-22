@@ -2,13 +2,15 @@
 
 --stuff for GUI
 local library = loadstring(game:HttpGet(('https://pastebin.com/raw/FsJak6AT')))()
-local w = library:CreateWindow("Dogecoin Mining Tycoon GUI")
-local b = w:CreateFolder("Teleports")
+local w = library:CreateWindow("Dogecoin GUI")
+local f = w:CreateFolder("Auto Farm")
+local b = w:CreateFolder("Location Teleport")
 local e = w:CreateFolder("Misc")
 local u = w:CreateFolder("Credits")
 
 --Tp stuff
 local pl = game.Players.LocalPlayer.Character.HumanoidRootPart
+--Location TP
 local mooncard1 = CFrame.new(-41841.6133, 110.4054565, -215.498489)
 local moon = CFrame.new(-41873.2891, 110.4054565, -306.498489)
 local Dmountain = CFrame.new(-807, 115, -426)
@@ -22,7 +24,8 @@ local mooncard2 = CFrame.new(-42113, 110, -243)
 local shelfs = CFrame.new(-35.7681732, 75.4446793, 239.801971)
 
 --main stuff
---Tp things
+
+--Tp areas
 b:Button("Tycoons",function()
     wait(0.1)
     pl.CFrame = tycoons
@@ -67,19 +70,48 @@ b:Button("Prize Wheel",function()
     wait(0.1)
     pl.CFrame = wheel
 end)
+
+
 --################################################################
 
---AntiAfk Things
+--misc things
+
+e:Slider("Walk Speed",function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 
+end)
+
+e:Slider("Jump Power",function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 75
+end)
+
+e:Button("Reset Character",function()
+    game.Players.LocalPlayer.Character.Head:Destroy()
+end)
+
+--bool Things
 e:Toggle("Anti Afk",function(bool)
     shared.toggle = bool
     AntiAfk = bool
+end) 
+
+f:Toggle("AutoSell", function(bool)
+    shared.toggle = bool
+    AutoSell = bool
 end)
 
-if AntiAfk == true then
-    local bb=game:service'VirtualUser'
-    bb:CaptureController()
-    bb:ClickButton2(Vector2.new())
+
+--Stuff to make bools work
+while wait() do
+    if AntiAfk == true then
+        local bb=game:service'VirtualUser'
+        bb:CaptureController()
+        bb:ClickButton2(Vector2.new())
+    end
+    
+    if AutoSell == true then
+        game:GetService("ReplicatedStorage").SpecWork.Shared.Network.Exchange:FireServer("Exchange",{["Rate"] = math.huge})
+    end
 end
   
 --Credits
-u:Button("Made by Rainy")
+u:Button("Created by Rainy")
